@@ -19,6 +19,9 @@ class Product {
     //TIOLO
 
     public function setName(string $name): void{
+        if(strlen($name) < 3) {
+            throw new Exception("nome del prodotto non valido");
+        }
         $this -> name = $name;
     }
 
@@ -29,6 +32,9 @@ class Product {
     //IMMAGINE
 
     public function setImg(string $img): void{
+        if(!strlen($img)) {
+            throw new Exception("percorso dell'immagine non valido");
+        }
         $this -> img = $img;
     }
 
@@ -39,6 +45,9 @@ class Product {
     //PREZZO
 
     public function setPrice(float $price): void{
+        if($price < 0) {
+            throw new Exception("prezzo non valido");
+        }
         $this -> price = $price;
     }
 
@@ -49,6 +58,9 @@ class Product {
     //DESCRIZIONE
 
     public function setDescription(float $description): void{
+        if(strlen($description) < 20) {
+            throw new Exception("descrizione del prodotto non valida");
+        }
         $this -> description = $description;
     }
 
@@ -70,11 +82,18 @@ class Product {
 
 
     // DISPONIBILITA'
-    public function getAvailability():string{
-        return $this->availability;
-    }
-
-    public function setAvailability( string $availability): void {
+    public function setAvailability( bool $availability): void {
+        if(!is_bool($availability)) {
+            $this->availability = false;
+        }
         $this->availability = $availability;
     }
+
+    public function getAvailability():string{
+        if($this->availability === false)
+            return 'Non disponibile';
+        else 
+            return 'Disponibile';
+    }
+
 }
